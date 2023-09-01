@@ -1,0 +1,54 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Dev",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["dev"],
+            "port": 3000,
+            "skipFiles": ["<node_internals>/**"],
+            "cwd": "${workspaceFolder}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Lint",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["lint"],
+            "skipFiles": ["<node_internals>/**"],
+            "cwd": "${workspaceFolder}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Build",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["build"],
+            "skipFiles": ["<node_internals>/**"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Start",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["start"],
+            "port": 3000,
+            "skipFiles": ["<node_internals>/**"],
+            "cwd": "${workspaceFolder}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}
