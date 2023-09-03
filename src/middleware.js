@@ -20,15 +20,18 @@ export function middleware(request) {
 		if(request.nextUrl.pathname === "/sigin" || request.nextUrl.pathname === "/signup"){
 			return NextResponse.redirect(homepage);
 		}
+		// if (request.nextUrl.pathname.startsWith("/")) {
+		// 	return NextResponse.rewrite(new URL("/relacionada", request.url));
+		// }
 		return NextResponse.next();
 	}else{
 		if(request.nextUrl.pathname === "/sigin" || request.nextUrl.pathname === "/signup"){
 			const response = NextResponse.next();
-			// response.cookies.set({
-			// 	name: "auth_token",
-			// 	value: "12345",
-			// 	path: "/",
-			// });
+			response.cookies.set({
+				name: "auth_token",
+				value: "12345",
+				path: "/",
+			});
 			return response;
 		}
 
@@ -38,5 +41,13 @@ export function middleware(request) {
 }
 
 export const config = {
-	matcher: ["/","/sigin","/signup","/users/:id"],
+	matcher: [
+		"/",
+		"/relacionada",
+		"/relacionada/:path*",
+		"/sigin",
+		"/signup",
+		"/cliente",
+		"/cliente/:path*",
+	],
 };

@@ -1,1 +1,8 @@
-
+body {
+	margin: 0;
+	display: grid;
+	place-items: center;
+	background-color: #e5e5e5;
+	font-family: system-ui, sans-serif;
+	color: #484848;
+}

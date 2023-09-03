@@ -1,0 +1,31 @@
+.list {
+	padding: 18px;
+	border: 1px solid #e5e5e5;
+	background-color: #ffffff;
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 250px;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.heading {
+	margin-inline: 0;
+	margin-block: 6px;
+}
+.selectbox {
+    text-decoration: none;
+    color: black;
+	border: 1px solid #e5e5e5;
+	padding: 10px;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.selectbox:hover {
+    color: #ffffff;
+	background-color: #0d6efd;
+	box-shadow: rgba(13, 110, 253, 0.25) 0px 8px 24px;
+}
