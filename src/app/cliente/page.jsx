@@ -4,18 +4,18 @@ import List from "../../component/List/list.jsx";
 
 export default function User(){
 
-	const json = [
+	const json =[
 		{
-			id: 1,
-			cnpj: "123",
-			name: "Ian Lucas",
-			email: "i@i.i",
+			"id": "9aae416a-aacc-4901-a419-9bc41d864a97",
+			"cnpj": "098",
+			"nome": "Lucas",
+			"email": "aa@aa.aa"
 		},
 		{
-			id: 2,
-			cnpj: "321",
-			name: "Lopes Honorio",
-			email: "a@a.a",
+			"id": "728bca3c-ee46-4108-888f-20b871679f00",
+			"cnpj": "aaaaa",
+			"nome": "empresa A",
+			"email": "q@qa.q"
 		}
 	];
 
@@ -26,7 +26,7 @@ export default function User(){
 			<p>Edit</p>
 
 			<List 
-				name={"clientes"} 
+				nome={"clientes"} 
 				json={json} 
 				rote={"/cliente/"} 
 			/>

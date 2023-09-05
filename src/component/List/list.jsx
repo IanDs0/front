@@ -11,7 +11,13 @@ function item (item, rote) {
 			className={styles.selectbox}
 		>
 			<label>
-				{item.cnpj} {item.name} {item.email}
+				{item.cnpj}{item.cpf}
+			</label>
+			<label>
+				{item.nome} 
+			</label>
+			<label>
+				{item.email}
 			</label>
 		</Link>
 	);
@@ -23,7 +29,7 @@ export default function List(props) {
 	
 	return (
 		<div className={styles.list}>
-			<h2 className={styles.heading}>{props.name}</h2>
+			<h2 className={styles.heading}>{props.nome}</h2>
 			{
 				props.json.map(
 					items => item(items, props.rote)
