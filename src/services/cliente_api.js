@@ -1,35 +1,31 @@
+import axios from "axios";
+
 require("dotenv").config();
 
 // Agora você pode acessar as variáveis de ambiente definidas no .env
 const API_URL = process.env.API_URL;
 
-const CLIENTE_URL = API_URL+"/cliente";
+const CLIENTE_URL = `${API_URL}/cliente`;
   
-export function getCliente(){
-
-	return fetch(CLIENTE_URL)
-		.then(response => {
-			if (!response.ok) {
-				throw new Error("Erro na requisição: " + response.statusText);
-			}
-			return response.json();
-		})
-		.then(data => {
-			console.log("Resposta da API:", data);
-		})
-		.catch(error => {
-			console.error("Erro: " + error.message);
-		});
+export async function getCliente() {
+	try {
+		const response = await axios.get("http://localhost:3000"+"/cliente");
+		return response.data; // Retorna os dados da pessoa como JSON
+	  } catch (error) {
+		console.error("Erro ao buscar dados da pessoa:", error);
+		throw error;
+	  }
+	
 }
 
-export function postCliente(postPessoData){
+export function postCliente(postClienteData){
 
 	const requestOptionsPostCliente = {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json", 
 		},
-		body: JSON.stringify(postPessoData),
+		body: JSON.stringify(postClienteData),
 	};
 
 	return fetch(CLIENTE_URL, requestOptionsPostCliente)
