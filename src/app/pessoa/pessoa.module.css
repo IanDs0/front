@@ -22,6 +22,25 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
     max-width: 500px; /* Largura máxima do pop-up */
     width: 100%;
+    max-height: 80vh; /* Altura máxima do pop-up, ajuste conforme necessário */
+    overflow-y: auto; /* Adiciona barra de rolagem vertical quando o conteúdo excede a altura */
+  }
+
+  .popupcontent::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+  }
+  
+  .popupcontent::-webkit-scrollbar-thumb {
+    background-color: #43A047; /* Cor da barra de rolagem */
+    border-radius: 5px; /* Bordas arredondadas da barra de rolagem */
+  }
+  
+  .popupcontent::-webkit-scrollbar-thumb:hover {
+    background-color: #4CAF50; /* Cor da barra de rolagem ao passar o mouse */
+  }
+  
+  .popupcontent::-webkit-scrollbar-track {
+    background-color: transparent; /* Cor de fundo da área da barra de rolagem */
   }
   
   .popup h2 {

@@ -10,8 +10,24 @@ const PESSOA_URL = API_URL+"/pessoa";
 
 export async function getPessoa() {
 	try {
-		const response = await axios.get("http://localhost:3000"+"/pessoa");
-		return response.data; // Retorna os dados da pessoa como JSON
+		const response = await axios.get(
+			"http://localhost:3000/pessoa",
+			{
+				headers: {
+		  		"Content-Type": "application/json",
+				},
+	  		}
+		)
+			.then(response => {
+				// console.log("Resposta da API:", response.data);
+				return response;
+			})
+			.catch(error => {
+				console.error("Erro: " + error.message);
+				throw error;
+			});
+
+		return response.data;
 	  } catch (error) {
 		console.error("Erro ao buscar dados da pessoa:", error);
 		throw error;
@@ -21,54 +37,79 @@ export async function getPessoa() {
 
 export async function postPessoa(postPessoData) {
 	try {
-	  const response = await axios.post("http://localhost:3000"+"/pessoa", postPessoData, {
-			headers: {
-		  "Content-Type": "application/json",
-			},
-	  });
-  
-	  if (response.status !== 200) {
-			throw new Error("Erro na requisição: " + response.statusText);
-	  }
-  
-	  return response.data;
+	  	const response = await axios.post(
+			"http://localhost:3000/pessoa",
+			postPessoData, 
+			{
+				headers: {
+		  			"Content-Type": "application/json",
+				},
+	  		}
+		)
+			.then(response => {
+				// console.log("Resposta da API:", response.data);
+				return response;
+			})
+			.catch(error => {
+				console.error("Erro: " + error.message);
+				throw error;
+			});
+
+		return response.data;
 	} catch (error) {
 	  console.error("Erro: " + error.message);
 	}
 }
   
 
-export function getPessoaId(getPessoaId) {
-	const pessoaIdURL = `http://localhost:3000/pessoa/${getPessoaId}`;
-  
-	return axios.get(pessoaIdURL)
-	  .then(response => {
-			console.log("Resposta da API:", response.data);
-			return response.data;
-	  })
-	  .catch(error => {
-			console.error("Erro: " + error.message);
-			throw error;
-	  });
+export async function getPessoaId(getPessoaId) {
+	try {
+		const response = await axios.get(
+			`http://localhost:3000/pessoa/${getPessoaId}`,
+			{
+				headers: {
+		  		"Content-Type": "application/json",
+				},
+	  		}
+		)
+			.then(response => {
+				// console.log("Resposta da API:", response.data);
+				return response;
+			})
+			.catch(error => {
+				console.error("Erro: " + error.message);
+				throw error;
+			});
+
+		return response.data;
+	} catch (error) {
+		  console.error("Erro:", error.message);
+		  throw error;
+	}
 }
   
 
 export async function patchPessoa(patchPessoaId, patchPessoData) {
 	try {
-	  const response = await axios.patch(`http://localhost:3000/pessoa/${patchPessoaId}`, patchPessoData, {
-			headers: {
-		  "Content-Type": "application/json",
-			},
-	  });
+	  	const response = await axios.patch(
+			`http://localhost:3000/pessoa/${patchPessoaId}`, 
+	  		patchPessoData, 
+			{
+				headers: {
+		  		"Content-Type": "application/json",
+				},
+	  		}
+	  	)
+	  		.then(response => {
+				// console.log("Resposta da API:", response.data);
+				return response;
+			})
+			.catch(error => {
+				console.error("Erro: " + error.message);
+				throw error;
+			});
   
-	  if (response.status !== 200) {
-			throw new Error("Erro na requisição: " + response.statusText);
-	  }
-  
-	  const data = response.data;
-	  console.log("Resposta da API:", data);
-  
-	  return data;
+	  return response.data;
 	} catch (error) {
 	  console.error("Erro:", error.message);
 	  throw error;
@@ -77,11 +118,27 @@ export async function patchPessoa(patchPessoaId, patchPessoData) {
 
 export async function deletePessoa(deletePessoaId) {
 	try {
-	  const response = await axios.delete(`http://localhost:3000/pessoa/${deletePessoaId}`);
-	  console.log("Resposta da API:", response.data);
+	  const response = await axios.delete(
+			`http://localhost:3000/pessoa/${deletePessoaId}`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+		  }
+		)
+			.then(response => {
+				// console.log("Resposta da API:", response.data);
+				return response;
+			})
+			.catch(error => {
+				console.error("Erro: " + error.message);
+				throw error;
+			});
+
+		return response.data;
 	} catch (error) {
-	  console.error("Erro:", error.message);
-	  throw error;
+	  	console.error("Erro:", error.message);
+	  	throw error;
 	}
 }
   

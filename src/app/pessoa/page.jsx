@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react";
 import { BiEditAlt, BiPlus, BiSave, BiTrash } from "react-icons/bi";
 
 
-import styles from "./cliente.module.css";
+import styles from "./pessoa.module.css";
 
 import { getPessoa, postPessoa, getPessoaId, patchPessoa, deletePessoa } from "../../services/pessoa_api";
-import { getCliente } from "../../services/cliente_api";
+import { getCliente, getClienteId } from "../../services/cliente_api";
 import List from "../../component/List/list.jsx";
 
 function formPessoa(setFormData,formData) {
@@ -60,7 +60,7 @@ function formPessoa(setFormData,formData) {
 	);
 }
 
-export default function User(){
+export default function Pessoa(){
 
 	// Pessoa API
 	async function GetById(id){
@@ -99,7 +99,7 @@ export default function User(){
 	async function Delete(id){
 		try {
 			let json = await deletePessoa(id);
-			console.log("Dados da pessoa como JSON:", json);
+			// console.log("Dados da pessoa como JSON:", json);
 			setJson(json);
 		} catch (error) {
 			console.error("Erro ao buscar dados da pessoa:", error);
@@ -110,8 +110,8 @@ export default function User(){
 	async function Create(post){
 		try {
 			let json = await postPessoa(post);
-			console.log("Dados da pessoa como JSON:", json);
-			// setJson(json);
+			// console.log("Dados da pessoa como JSON:", json);
+			setJson(json);
 		} catch (error) {
 			console.error("Erro ao buscar dados da pessoa:", error.status);
 			throw error;
@@ -123,8 +123,19 @@ export default function User(){
 	async function GetAllClientes(){
 		try {
 			let json = await getCliente();
-			console.log("Dados da pessoa como JSON:", json);
+			// console.log("Dados da pessoa como JSON:", json);
 			setClients(json);
+		} catch (error) {
+			console.error("Erro ao buscar dados da pessoa:", error);
+			throw error;
+		}
+	}
+
+	async function GetClienteById(id){
+		try {
+			let json = await getClienteId(id);
+			// console.log("Dados da pessoa como JSON:", json);
+			return json.data;
 		} catch (error) {
 			console.error("Erro ao buscar dados da pessoa:", error);
 			throw error;
@@ -162,10 +173,6 @@ export default function User(){
 		email: "",
 	});
 
-
-
-
-
 	// Editar
 	function EditAndSave() {
 		if (edit === false) {
@@ -185,9 +192,7 @@ export default function User(){
 
 		GetById(id);
 
-		
 		const data = new Date(json.data_de_nascimento).toISOString().slice(0, 10);
-
 
 		const formDataJson = {
 			id: json.id,
@@ -203,35 +208,44 @@ export default function User(){
 		setFormStatus(true);
 	};
 
-	const patchSubmit = () => {
-		const formDataJson = {
-			id: json.id,
-			nome: formData.nome,
-			telefone: formData.telefone,
-			cpf: formData.cpf,
-			data_de_nascimento: formData.data_de_nascimento+"T00:00:00.000Z",
-			email: formData.email,
-			cliente: selectedClients.map(cliente => ({cnpj: cliente})),
-		};
+	async function patchSubmit (){
+
+		try {
+			const allClientsPromises = selectedClients.map(async (cliente) => {
+				return await GetClienteById(cliente);
+			});
+
+			// Use await diretamente em Promise.all para esperar a resolução das promessas
+			const allClientsSelected = await Promise.all(allClientsPromises);
+
+			const formDataJson = {
+				id: json.id,
+				nome: formData.nome,
+				telefone: formData.telefone,
+				cpf: formData.cpf,
+				data_de_nascimento: formData.data_de_nascimento+"T00:00:00.000Z",
+				email: formData.email,
+				cliente: allClientsSelected,
+			};
+
+			console.log(formDataJson);
+			await Patch(formDataJson.id,formDataJson);
 		
-		Patch(formDataJson.id,formDataJson);
-		
-		setFormData({
-			nome: "",
-			telefone: "",
-			cpf: "",
-			data_de_nascimento: "",
-			email: "",
-		});
-		setSelectedClients([]);
-		
-		setFormStatus(false);
+			setFormData({
+				nome: "",
+				telefone: "",
+				cpf: "",
+				data_de_nascimento: "",
+				email: "",
+			});
+			setSelectedClients([]);
+			
+			setFormStatus(false);
+		} catch (error) {
+		  	console.error("Erro ao lidar com o envio do formulário:", error);
+		}	
 	};
 	  
-
-
-
-
 	// Deleta;
 	
 	function Delet() {
@@ -259,10 +273,6 @@ export default function User(){
 		setDU(0);
 	};
 
-	
-
-
-	
 	// Cria;
 
 	function Creat() {
@@ -285,38 +295,43 @@ export default function User(){
 		}
 	};
 
-	const handleSubmit = () => {
-		// Crie um objeto JSON com os dados do formulário
-		const formDataJson = {
-			nome: formData.nome,
-			telefone: formData.telefone,
-			cpf: formData.cpf,
-			data_de_nascimento: formData.data_de_nascimento+"T00:00:00.000Z",
-			email: formData.email,
-			cliente: selectedClients.map(cliente => ({cnpj: cliente})),
-		};
+	async function handleSubmit () {
 		
-		// Você pode fazer o que quiser com formDataJson, como enviá-lo para um servidor
-		console.log(formDataJson);
-		Create(formDataJson);
+		try {
+			const allClientsPromises = selectedClients.map(async (cliente) => {
+				return await GetClienteById(cliente);
+			});
+
+			// Use await diretamente em Promise.all para esperar a resolução das promessas
+			const allClientsSelected = await Promise.all(allClientsPromises);
+
+			const formDataJson = {
+				id: json.id,
+				nome: formData.nome,
+				telefone: formData.telefone,
+				cpf: formData.cpf,
+				data_de_nascimento: formData.data_de_nascimento+"T00:00:00.000Z",
+				email: formData.email,
+				cliente: allClientsSelected,
+			};
+
+			console.log(formDataJson);
+			await Create(formDataJson);
 		
-		// Limpar o formulário e fechar o pop-up
-		setFormData({
-			nome: "",
-			telefone: "",
-			cpf: "",
-			data_de_nascimento: "",
-			email: "",
-		});
-		setSelectedClients([]);
-		
-		  // Fechar o pop-up (você pode chamar a função onClose aqui se necessário)
-		setFormStatus(!formstatus);
+			setFormData({
+				nome: "",
+				telefone: "",
+				cpf: "",
+				data_de_nascimento: "",
+				email: "",
+			});
+			setSelectedClients([]);
+			
+			setFormStatus(false);
+		} catch (error) {
+		  	console.error("Erro ao lidar com o envio do formulário:", error);
+		}
 	};
-
-
-
-
 
 	return (
 		<>
@@ -342,13 +357,13 @@ export default function User(){
 						}
 						<ul>
 							{clients.map((client) => (
-								<li key={client.cnpj}>
+								<li key={client.id}>
 									<label>
 										<input
 											type="checkbox"
-											value={client.cnpj}
-											checked={selectedClients.includes(client.cnpj)}
-											onChange={() => handleClientSelect(client.cnpj)}
+											value={client.id}
+											checked={selectedClients.includes(client.id)}
+											onChange={() => handleClientSelect(client.id)}
 										/>
 										{client.nome}
 									</label>
@@ -371,7 +386,7 @@ export default function User(){
 				deleteouupdate={DU}
 				delete={D}
 				update={U}
-				rote={"/cliente/"} 
+				rote={"/pessoa/"} 
 			/>
 		</>
 	);
