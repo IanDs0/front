@@ -3,17 +3,18 @@ import axios from "axios";
 require("dotenv").config();
 
 // Agora você pode acessar as variáveis de ambiente definidas no .env
-const API_URL = process.env.API_URL;
+const API_URL = "http://localhost:3000";//process.env.API_URL;
 
 const CLIENTE_URL = `${API_URL}/cliente`;
   
-export async function getCliente() {
+export async function getCliente(token) {
 	try {
 		const response = await axios.get(
-			"http://localhost:3000/cliente",
+			CLIENTE_URL,
 			{
 				headers: {
 					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 			}
 		)
@@ -34,14 +35,15 @@ export async function getCliente() {
 	
 }
 
-export async function postCliente(postClienteData){
+export async function postCliente(postClienteData, token){
 	try {
 		const response = await axios.post(
-		  "http://localhost:3000/cliente",
+			CLIENTE_URL,
 		  postClienteData, 
 		  {
 			  headers: {
 					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 			  },
 			}
 		)
@@ -60,13 +62,14 @@ export async function postCliente(postClienteData){
 	}
 }
 
-export async function getClienteId(getClienteId){
+export async function getClienteId(getClienteId, token){
 	try {
 		const response =  axios.get(
-			`http://localhost:3000/cliente/${getClienteId}`,
+			`${CLIENTE_URL}/${getClienteId}`,
 			{
 				headers: {
 		  		"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 	  		}
 		)
@@ -86,14 +89,15 @@ export async function getClienteId(getClienteId){
 	}
 }
 
-export async function patchCliente(patchClienteId, patchClienteData){
+export async function patchCliente(patchClienteId, patchClienteData, token){
 	try {
 		const response = await axios.patch(
-			`http://localhost:3000/cliente/${patchClienteId}`, 
+			`${CLIENTE_URL}/${patchClienteId}`, 
 			patchClienteData, 
 			{
 				headers: {
 					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 			}
 		)
@@ -113,14 +117,15 @@ export async function patchCliente(patchClienteId, patchClienteData){
 	  }
 }
 
-export async function deleteCliente(deliteClienteId){
+export async function deleteCliente(deliteClienteId, token){
 
 	try {
 		const response = await axios.delete(
-			`http://localhost:3000/cliente/${deliteClienteId}`,
+			`${CLIENTE_URL}/${deliteClienteId}`,
 			{
 				headers: {
 					  "Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 			}
 		)

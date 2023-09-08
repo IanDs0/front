@@ -8,6 +8,7 @@ import styles from "./cliente.module.css";
 import { getPessoa, getPessoaId } from "../../services/pessoa_api";
 import { getCliente, postCliente, getClienteId, patchCliente, deleteCliente } from "../../services/cliente_api";
 import List from "../../component/List/list.jsx";
+import Cookies from "js-cookie";
 
 function formPessoa(setFormData,formData,setOpcaoSelecionada,opcaoSelecionada) {
 
@@ -138,10 +139,12 @@ function formPessoa(setFormData,formData,setOpcaoSelecionada,opcaoSelecionada) {
 
 export default function Cliente(){
 
+	const access_token = Cookies.get("access_token");
+
 	// Cliente API
 	async function GetById(id){
 		try {
-			let json = await getClienteId(id);
+			let json = await getClienteId(id, access_token);
 			// console.log("Dados da pessoa como JSON:", json.data);
 			setJson(json.data);
 		} catch (error) {
@@ -152,7 +155,7 @@ export default function Cliente(){
 	
 	async function Patch(id, patch){
 		try {
-			let json = await patchCliente(id, patch);
+			let json = await patchCliente(id, patch, access_token);
 			// console.log("Dados da pessoa como JSON:", json);
 			setJson(json);
 		} catch (error) {
@@ -163,7 +166,7 @@ export default function Cliente(){
 	
 	async function GetAll(){
 		try {
-			let json = await getCliente();
+			let json = await getCliente(access_token);
 			// console.log("Dados da pessoa como JSON:", json);
 			setJsonArry(json);
 		} catch (error) {
@@ -174,7 +177,7 @@ export default function Cliente(){
 
 	async function Delete(id){
 		try {
-			let json = await deleteCliente(id);
+			let json = await deleteCliente(id, access_token);
 			// console.log("Dados da pessoa como JSON:", json);
 			setJson(json);
 		} catch (error) {
@@ -185,7 +188,7 @@ export default function Cliente(){
 
 	async function Create(post){
 		try {
-			let json = await postCliente(post);
+			let json = await postCliente(post, access_token);
 			// console.log("Dados da pessoa como JSON:", json);
 			setJson(json);
 		} catch (error) {
@@ -198,7 +201,7 @@ export default function Cliente(){
 	
 	async function GetAllPessoas(){
 		try {
-			let json = await getPessoa();
+			let json = await getPessoa(access_token);
 			// console.log("Dados da pessoa como JSON:", json);
 			setClients(json);
 		} catch (error) {
@@ -209,7 +212,7 @@ export default function Cliente(){
 
 	async function GetPessoaById(id){
 		try {
-			let json = await getPessoaId(id);
+			let json = await getPessoaId(id, access_token);
 			// console.log("Dados da pessoa como JSON:", json);
 			return json;
 		} catch (error) {

@@ -3,18 +3,19 @@ import axios from "axios";
 require("dotenv").config();
 
 // Agora você pode acessar as variáveis de ambiente definidas no .env
-const API_URL = process.env.API_URL;
+const API_URL = "http://localhost:3000";//process.env.API_URL;
 
 const PESSOA_URL = API_URL+"/pessoa";
   
 
-export async function getPessoa() {
+export async function getPessoa(token) {
 	try {
 		const response = await axios.get(
-			"http://localhost:3000/pessoa",
+			PESSOA_URL,
 			{
 				headers: {
-		  		"Content-Type": "application/json",
+		  			"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 	  		}
 		)
@@ -35,14 +36,15 @@ export async function getPessoa() {
 	
 }
 
-export async function postPessoa(postPessoData) {
+export async function postPessoa(postPessoData, token) {
 	try {
 	  	const response = await axios.post(
-			"http://localhost:3000/pessoa",
+			PESSOA_URL,
 			postPessoData, 
 			{
 				headers: {
 		  			"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 	  		}
 		)
@@ -62,13 +64,14 @@ export async function postPessoa(postPessoData) {
 }
   
 
-export async function getPessoaId(getPessoaId) {
+export async function getPessoaId(getPessoaId, token) {
 	try {
 		const response = await axios.get(
-			`http://localhost:3000/pessoa/${getPessoaId}`,
+			`${PESSOA_URL}/${getPessoaId}`,
 			{
 				headers: {
-		  		"Content-Type": "application/json",
+		  			"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 	  		}
 		)
@@ -89,14 +92,15 @@ export async function getPessoaId(getPessoaId) {
 }
   
 
-export async function patchPessoa(patchPessoaId, patchPessoData) {
+export async function patchPessoa(patchPessoaId, patchPessoData, token) {
 	try {
 	  	const response = await axios.patch(
-			`http://localhost:3000/pessoa/${patchPessoaId}`, 
+			`${PESSOA_URL}/${patchPessoaId}`, 
 	  		patchPessoData, 
 			{
 				headers: {
-		  		"Content-Type": "application/json",
+		  			"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 	  		}
 	  	)
@@ -116,13 +120,14 @@ export async function patchPessoa(patchPessoaId, patchPessoData) {
 	}
 }
 
-export async function deletePessoa(deletePessoaId) {
+export async function deletePessoa(deletePessoaId, token) {
 	try {
 	  const response = await axios.delete(
-			`http://localhost:3000/pessoa/${deletePessoaId}`,
+			`${PESSOA_URL}/${deletePessoaId}`,
 			{
 				headers: {
 					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`,
 				},
 		  }
 		)
